@@ -14,10 +14,7 @@ export async function POST(request) {
 
   const createdDate = new Date().toLocaleString();
 
-  const newPost = {
-    ...requestBody,
-    date: createdDate,
-  };
+  const newPost = {...requestBody,date: createdDate,};
 
   const filePath = path.join(process.cwd(), 'data', 'posts.json');
   const fileData = fs.readFileSync(filePath);

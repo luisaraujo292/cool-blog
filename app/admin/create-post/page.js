@@ -9,12 +9,12 @@ import { useRef, useState } from 'react';
 import CONSTANTS from '@/app/constants';
 
 export default function CreatePostPage() {
-  const [slugLabel, setSlugLabel] = useState('<slug>'); 
-  const slugInputRef = useRef();
-  const titleInputRef = useRef();
-  const thumbnailInputRef = useRef();
-  const excerptInputRef = useRef();
-  const contentInputRef = useRef();
+  var [slugLabel, setSlugLabel] = useState('<slug>'); 
+  var slugInputRef = useRef();
+  var titleInputRef = useRef();
+  var thumbnailInputRef = useRef();
+  var excerptInputRef = useRef();
+  var contentInputRef = useRef();
 
   function updatePostUrl() {
     setSlugLabel(slugInputRef.current.value);
@@ -22,14 +22,16 @@ export default function CreatePostPage() {
 
   function submitPost(event) {
     event.preventDefault();
+    
 
-    const formData = {
+    //Criando um object
+    var formData = {
       slug: slugInputRef.current.value,
       title: titleInputRef.current.value,
       thumb: thumbnailInputRef.current.value,
       excerpt: excerptInputRef.current.value,
       content: contentInputRef.current.value,
-    };
+};
 
     fetch('/api/admin/create-post', {
       method: 'POST',
