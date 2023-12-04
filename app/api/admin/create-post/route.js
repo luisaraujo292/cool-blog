@@ -9,20 +9,34 @@ import path from 'path';
 import fs from 'fs';
 import CONSTANTS from '@/app/constants';
 
+ 
 export async function POST(request) {
+  
+  // 1. Lê o corpo da requisição como JSON
   const requestBody = await request.json();
 
+  // 2. Obtém a data atual como string formatada
   const createdDate = new Date().toLocaleString();
 
+  // 3. Adiciona a data ao objeto recebido na requisição
   const newPost = {...requestBody,date: createdDate,};
 
+   // 4. Obtém o caminho do arquivo onde os dados são armazenados
   const filePath = path.join(process.cwd(), 'data', 'posts.json');
+
+   // 5. Lê o conteúdo do arquivo
   const fileData = fs.readFileSync(filePath);
+
+  // 6. Converte o conteúdo do arquivo JSON para um objeto JavaScript
   const data = JSON.parse(fileData);
 
+   // 7. Adiciona o novo post aos dados existentes
   data.push(newPost);
+  
+  // 8. Escreve os dados atualizados de volta ao arquivo
   fs.writeFileSync(filePath, JSON.stringify(data));
 
+  // 9. Retorna uma resposta em formato JSON
   return NextResponse.json({
     status: CONSTANTS.RESPONSE_STATUS.OK,
     data: {

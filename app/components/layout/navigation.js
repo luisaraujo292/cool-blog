@@ -7,7 +7,6 @@ export default function Navigation() {
       <Link href="/" className={styles['nav-link']}>
         HOME
       </Link>
-
       <nav>
         <ul>
           <li>

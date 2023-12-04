@@ -3,19 +3,33 @@
 //O useRef é um hook fornecido pelo React que oferece uma maneira de acessar e interagir com o DOM (Document Object Model) diretamente em componentes de função. Ele é frequentemente usado para referenciar elementos do DOM, mas também pode ser útil para armazenar e acessar valores mutáveis que persistem através das renderizações do componente.
 
 //O código acima é um componente React em Next.js chamado CreatePostPage. Incluímos a diretiva "use client" na parte superior do arquivo para indicar que é um componente cliente em Next.js. Em seguida, ele importa os ganchos useRef e useState da biblioteca React. Depois disso, a função do componente CreatePostPage é definida. Dentro dele, diversas variáveis ​​de estado e referências useRef são declaradas para armazenar os valores inseridos nas entradas do formulário. A função updatePostUrl é definida e acionada quando o evento onChange ocorre no campo de entrada do slug. Ele atualiza o estado do slugLabel com o valor atual do campo de entrada do slug. Em seguida, é definida a função submitPost, que é chamada quando o formulário é enviado. Impede o comportamento padrão de envio de formulário. Dentro de submitPost, um objeto formData é criado, capturando os valores inseridos nas entradas do formulário. Uma solicitação HTTP é feita para o endpoint da API "/api/admin/create-post" usando fetch() com o objeto formData no corpo da solicitação como uma string JSON. A resposta é tratada por meio de promessas. A primeira resposta é convertida em JSON usando o método data.json(). Em seguida, para confirmar o sucesso da adição de uma nova postagem, uma caixa de diálogo com a mensagem "Adicionou uma nova postagem com sucesso" será exibida se a propriedade "status" do objeto "resposta" for igual a "CONSTANTS.RESPONSE_STATUS.OK".
+
+// A função é geralmente associada a um elemento <form> e é definida como um atributo no elemento <form>. Quando o formulário é enviado, o código JavaScript especificado na função onsubmit é executado. Este código pode ser usado para validar os dados do formulário antes que ele seja enviado para o servidor, realizar ações específicas com base nos dados inseridos, entre outras coisas. 
+
+
+//useRef e useState são hooks do React. useRef é utilizado para criar referências a elementos do DOM, enquanto useState é um hook que permite adicionar estado a componentes funcionais.
+//CONSTANTS é importado de algum arquivo ou módulo chamado @/app/constants.
+
+
 'use client';
 
 import { useRef, useState } from 'react';
 import CONSTANTS from '@/app/constants';
 
-export default function CreatePostPage() {
-  var [slugLabel, setSlugLabel] = useState('<slug>'); 
-  var slugInputRef = useRef();
-  var titleInputRef = useRef();
-  var thumbnailInputRef = useRef();
-  var excerptInputRef = useRef();
-  var contentInputRef = useRef();
 
+//Define um componente funcional chamado CreatePostPage
+export default function CreatePostPage() {
+  //slugLabel é um estado que armazena o rótulo do slug. setSlugLabel é uma função para atualizar esse estado.
+  //useRef é usado para criar referências para os inputs do formulário.
+  const [slugLabel, setSlugLabel] = useState('<slug>'); 
+  const slugInputRef = useRef();
+  const titleInputRef = useRef();
+  const thumbnailInputRef = useRef();
+  const excerptInputRef = useRef();
+  const contentInputRef = useRef();
+
+  //updatePostUrl: Atualiza o estado slugLabel com o valor do input do slug, chamada quando o input é alterado
+  //submitPost: Manipula o envio do formulário. Cria um objeto formData com os valores dos inputs, faz uma requisição POST para a URL /api/admin/create-post usando o fetch, e exibe um alerta com base na resposta.
   function updatePostUrl() {
     setSlugLabel(slugInputRef.current.value);
   }
@@ -53,7 +67,7 @@ export default function CreatePostPage() {
   return (
     <>
       <h1>Create New Post</h1>
-      <form onSubmit={submitPost}>
+      <form onSubmit={submitPost}> 
         <div className="row">
           <div className="col-label">
             <label htmlFor="slug">Slug</label>
